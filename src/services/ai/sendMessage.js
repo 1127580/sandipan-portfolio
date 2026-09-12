@@ -1,6 +1,6 @@
 import { searchKnowledge } from "../knowledge/index.js";
 
-const API_URL = "http://localhost:3001/api/chat";
+const API_URL = "/api/chat";
 
 function buildKnowledgeContext(matches) {
   return matches

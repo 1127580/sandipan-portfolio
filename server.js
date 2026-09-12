@@ -1,15 +1,20 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import { GoogleGenAI } from "@google/genai";
 
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
-const PORT = 3001;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+const PORT = process.env.PORT || 3001;
+
+app.use(cors());
 app.use(express.json());
 
 const ai = new GoogleGenAI({
@@ -83,17 +88,39 @@ ${knowledge || "No verified portfolio information was supplied for this request.
     });
 
     res.json({
-      text: response.text || "I couldn't generate a response right now.",
+      text:
+        response.text ||
+        "I couldn't generate a response right now.",
     });
   } catch (error) {
     console.error("Gemini API error:", error);
 
     res.status(500).json({
-      error: "Sandipan AI could not process the request right now.",
+      error:
+        "Sandipan AI could not process the request right now.",
     });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Sandipan AI backend running at http://localhost:${PORT}`);
+/*
+ * Production frontend
+ * Vite creates the production files inside /dist.
+ */
+const distPath = path.join(__dirname, "dist");
+
+app.use(express.static(distPath));
+
+/*
+ * React/Vite SPA fallback.
+ * API routes are already handled above.
+ */
+app.use((req, res, next) => {
+  if (req.path.startsWith("/api/")) {
+    return next();
+  }
+
+  res.sendFile(path.join(distPath, "index.html"));
+});
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Sandipan Portfolio running on port ${PORT}`);
 });
