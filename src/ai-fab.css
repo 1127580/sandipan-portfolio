@@ -1,0 +1,293 @@
+/* =========================================
+   SANDIPAN AI — FUTURISTIC FLOATING ORB
+   ========================================= */
+
+.ai-fab-wrap{
+  display:flex;
+  position:fixed;
+  right:28px;
+  bottom:28px;
+  z-index:8;
+}
+
+.ai-fab{
+  position:relative;
+
+  width:62px;
+  height:62px;
+  padding:0;
+
+  display:grid;
+  place-items:center;
+
+  overflow:visible;
+
+  border:1px solid rgba(93,255,176,.55);
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(93,255,176,.20),
+      rgba(10,20,16,.96) 68%
+    );
+
+  color:#5dffb0;
+
+  box-shadow:
+    0 0 0 1px rgba(93,255,176,.08),
+    0 0 24px rgba(93,255,176,.14),
+    0 12px 35px rgba(0,0,0,.45);
+
+  cursor:pointer;
+
+  transition:
+    transform .3s cubic-bezier(.2,.8,.2,1),
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+/* Outer energy ring */
+
+.ai-fab::before{
+  content:"";
+
+  position:absolute;
+  inset:-6px;
+
+  border:1px solid rgba(93,255,176,.20);
+  border-radius:50%;
+
+  pointer-events:none;
+
+  animation:aiOrbPulse 3s ease-in-out infinite;
+}
+
+/* Moving light */
+
+.ai-fab::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  border-radius:50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      transparent 35%,
+      rgba(93,255,176,.20),
+      transparent 65%
+    );
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:opacity .3s ease;
+}
+
+/* Orb icon */
+
+.ai-fab > span:first-child{
+  position:relative;
+  z-index:3;
+
+  font-size:22px;
+  line-height:1;
+
+  color:#5dffb0;
+
+  text-shadow:
+    0 0 8px rgba(93,255,176,.7),
+    0 0 18px rgba(93,255,176,.35);
+
+  transition:
+    transform .3s ease,
+    text-shadow .3s ease;
+}
+
+/* Label */
+
+.ai-fab-label{
+  position:absolute;
+
+  top:calc(100% + 11px);
+  left:50%;
+
+  transform:translateX(-50%);
+
+  width:max-content;
+  max-width:none;
+
+  margin:0;
+
+  display:block;
+
+  overflow:visible;
+
+  white-space:nowrap;
+
+  font:500 9px 'DM Mono',monospace;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+
+  color:#5dffb0;
+
+  opacity:1;
+
+  pointer-events:none;
+
+  text-shadow:
+    0 0 8px rgba(93,255,176,.35);
+
+  /* Hide original "Sandipan AI" text */
+  font-size:0;
+
+  transition:
+    transform .25s ease,
+    text-shadow .25s ease;
+}
+
+/* Normal label */
+
+.ai-fab-label::after{
+  content:"AI ASSISTANT";
+
+  font:500 9px 'DM Mono',monospace;
+  letter-spacing:.12em;
+}
+
+/* Hover */
+
+.ai-fab:hover{
+  width:62px;
+  height:62px;
+
+  border-radius:50%;
+
+  transform:translateY(-4px) scale(1.07);
+
+  border-color:rgba(93,255,176,.9);
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(93,255,176,.28),
+      rgba(9,19,15,.98) 68%
+    );
+
+  box-shadow:
+    0 0 0 1px rgba(93,255,176,.12),
+    0 0 32px rgba(93,255,176,.28),
+    0 16px 42px rgba(0,0,0,.5);
+}
+
+.ai-fab:hover::after{
+  opacity:1;
+}
+
+.ai-fab:hover > span:first-child{
+  transform:scale(1.12) rotate(8deg);
+
+  text-shadow:
+    0 0 10px rgba(93,255,176,.9),
+    0 0 24px rgba(93,255,176,.55);
+}
+
+/* Hover label becomes Sandipan AI */
+
+.ai-fab:hover .ai-fab-label::after{
+  content:"SANDIPAN AI";
+}
+
+.ai-fab:hover .ai-fab-label{
+  transform:translateX(-50%) translateY(2px);
+
+  text-shadow:
+    0 0 8px rgba(93,255,176,.55),
+    0 0 18px rgba(93,255,176,.25);
+}
+
+/* Keyboard focus */
+
+.ai-fab:focus-visible{
+  outline:2px solid #5dffb0;
+  outline-offset:5px;
+}
+
+/* Click */
+
+.ai-fab:active{
+  transform:translateY(-1px) scale(.98);
+}
+
+/* Orb animation */
+
+@keyframes aiOrbPulse{
+
+  0%,
+  100%{
+    transform:scale(.96);
+    opacity:.35;
+  }
+
+  50%{
+    transform:scale(1.08);
+    opacity:1;
+  }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media(max-width:760px){
+
+  .ai-fab-wrap{
+    right:18px;
+    bottom:18px;
+    left:auto;
+    transform:none;
+  }
+
+  .ai-fab{
+    width:58px;
+    height:58px;
+  }
+
+  .ai-fab:hover{
+    width:58px;
+    height:58px;
+
+    transform:translateY(-3px) scale(1.04);
+
+    border-radius:50%;
+  }
+
+  .ai-fab-label{
+    top:calc(100% + 9px);
+  }
+
+  .ai-fab-label::after{
+    font-size:8px;
+  }
+}
+
+/* =========================================
+   REDUCED MOTION
+   ========================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  .ai-fab,
+  .ai-fab-label,
+  .ai-fab > span:first-child{
+    transition:none;
+  }
+
+  .ai-fab::before{
+    animation:none;
+  }
+}
